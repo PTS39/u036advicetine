@@ -1,0 +1,142 @@
+ค่าตารางหมายเหตุคือ ท่าวันนั้นมีการ Clock In และ Clock Out. ให้หมายเหตุว่า มาทำงาน
+แต่ท่าวันนั้น มีค่า Clock In หรือ Clock Out อย่างไดอย่างหนึ่งให้หมายเหตุว่า ขาดงาน 
+
+Sunday Monday Tuesday Wednesday Thursday Friday Saturday
+signup.php
+register_process.php
+
+
+
+js แจ้งเตือน ไม่สามารถบันทึกได้
+
+function openForm(action) {
+            getLocation(function(latitude, longitude) {
+                var officeLatitude = 15.2752837;  // กำหนดค่าที่ตั้งสำนักงาน
+                var officeLongitude = 104.7960272;  // กำหนดค่าที่ตั้งสำนักงาน
+                var distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
+
+                if (distance > 999) {
+                    var distanceKm = Math.floor(distance / 1000);
+                    var distanceM = distance % 1000;
+                    alert("คุณอยู่นอกพื้นที่บริษัท ไม่สามารถบันทึกข้อมูลได้ คุณอยู่ห่างจากบริษัทประมาณ " + distanceKm + " กิโลเมตร และ " + distanceM.toFixed(2) + " เมตร");
+                } else if (distance > 10) {
+                    alert("คุณอยู่นอกพื้นที่บริษัท ไม่สามารถบันทึกข้อมูลได้ คุณอยู่ห่างจากบริษัทประมาณ " + distance.toFixed(2) + " เมตร");
+                } else {
+                    var fullName = document.getElementById('fullName').innerText;
+                    var employeeId = document.getElementById('employeeId').innerText;
+                    var position = document.getElementById('position').innerText;
+                    var currentTime = document.getElementById('currentTime').innerText;
+
+                    document.getElementById('formEmployeeId').value = employeeId;
+                    document.getElementById('formFullName').value = fullName;
+                    document.getElementById('formPosition').value = position;
+                    document.getElementById('formLatitude').value = latitude;
+                    document.getElementById('formLongitude').value = longitude;
+                    document.getElementById('formAction').value = action;
+                    document.getElementById('formCurrentTime').value = currentTime;
+
+                    document.getElementById('formFullNameText').innerText = 'ชื่อ: ' + fullName;
+                    document.getElementById('formEmployeeIdText').innerText = 'รหัสพนักงาน: ' + employeeId;
+                    document.getElementById('formPositionText').innerText = 'ตำแหน่ง: ' + position;
+                    document.getElementById('formLatitudeText').innerText = 'Latitude: ' + latitude;
+                    document.getElementById('formLongitudeText').innerText = 'Longitude: ' + longitude;
+                    document.getElementById('formActionText').innerText = 'Action: ' + action;
+                    document.getElementById('formCurrentTimeText').innerText = 'Current Time: ' + currentTime;
+
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('popupForm').style.display = 'block';
+                }
+            });
+        }
+
+js แจ้งเตือน สามารถบันทึกได้
+
+function openForm(action) {
+    getLocation(function(latitude, longitude) {
+        var officeLatitude = 15.2752837;  // กำหนดค่าที่ตั้งสำนักงาน
+        var officeLongitude = 104.7960272;  // กำหนดค่าที่ตั้งสำนักงาน
+        var distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
+
+        if (distance > 999) {
+            var distanceKm = Math.floor(distance / 1000);
+            var distanceM = distance % 1000;
+            var confirmMessage = "คุณอยู่นอกพื้นที่บริษัท คุณอยู่ห่างจากบริษัทประมาณ " + distanceKm + " กิโลเมตร " + distanceM.toFixed(2) + " เมตร คุณต้องการบันทึกข้อมูลหรือไม่?";
+        } else if (distance > 10) {
+            var confirmMessage = "คุณอยู่นอกพื้นที่บริษัท คุณอยู่ห่างจากบริษัทประมาณ " + distance.toFixed(2) + " เมตร คุณต้องการบันทึกข้อมูลหรือไม่?";
+        }
+
+        if (distance > 10 && !confirm(confirmMessage)) {
+            return;
+        }
+
+        var fullName = document.getElementById('fullName').innerText;
+        var employeeId = document.getElementById('employeeId').innerText;
+        var position = document.getElementById('position').innerText;
+        var currentTime = document.getElementById('currentTime').innerText;
+
+        document.getElementById('formEmployeeId').value = employeeId;
+        document.getElementById('formFullName').value = fullName;
+        document.getElementById('formPosition').value = position;
+        document.getElementById('formLatitude').value = latitude;
+        document.getElementById('formLongitude').value = longitude;
+        document.getElementById('formAction').value = action;
+        document.getElementById('formCurrentTime').value = currentTime;
+
+        document.getElementById('formFullNameText').innerText = 'ชื่อ: ' + fullName;
+        document.getElementById('formEmployeeIdText').innerText = 'รหัสพนักงาน: ' + employeeId;
+        document.getElementById('formPositionText').innerText = 'ตำแหน่ง: ' + position;
+        document.getElementById('formLatitudeText').innerText = 'Latitude: ' + latitude;
+        document.getElementById('formLongitudeText').innerText = 'Longitude: ' + longitude;
+        document.getElementById('formActionText').innerText = 'Action: ' + action;
+        document.getElementById('formCurrentTimeText').innerText = 'Current Time: ' + currentTime;
+
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('popupForm').style.display = 'block';
+    });
+}
+
+
+
+
+Realtime Database
+
+{
+  "rules": {
+    "user": {
+      ".indexOn": "email",
+      ".read": true,
+      ".write": true
+    },
+    "datatime": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["employeeId"]
+    }
+  }
+}
+
+
+Storage
+
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // This rule allows anyone with your Storage bucket reference to view, edit,
+    // and delete all data in your Storage bucket. It is useful for getting
+    // started, but it is configured to expire after 30 days because it
+    // leaves your app open to attackers. At that time, all client
+    // requests to your Storage bucket will be denied.
+    //
+    // Make sure to write security rules for your app before that time, or else
+    // all client requests to your Storage bucket will be denied until you Update
+    // your rules
+    match /{allPaths=**} {
+      allow read, write: if request.time < timestamp.date(2024, 8, 30);
+    }
+  }
+}

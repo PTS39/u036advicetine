@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #4e34b6;
+    margin: 0;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 2px 9px 49px -17px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #4e34b6;
+    margin-bottom: 30px;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.content {
+    flex-basis: 50%;
+    padding: 20px;
+}
+
+.form-img {
+    flex-basis: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.upload-btn-wrapper {
+    text-align: center;
+}
+
+.upload-btn {
+    display: inline-block;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 35px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+.upload-btn input {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 35px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #4e34b6;
+    color: #fff;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #3a2b99;
+    color: #272346;
+    transition: 0.5s ease;
+}
+
+.account {
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 736px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content, .form-img {
+        flex-basis: 100%;
+        padding: 20px;
+    }
+
+    .content {
+        order: 2;
+    }
+
+    .form-img {
+        order: 1;
+    }
+}
